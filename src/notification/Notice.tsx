@@ -46,12 +46,12 @@ const Notify = React.forwardRef<HTMLDivElement, NoticeProps & { times?: number }
 
   // ======================== Close =========================
   const onInternalClose = () => {
-    onNoticeClose(eventKey);
+    onNoticeClose?.(eventKey);
   };
 
   // ======================== Effect ========================
   React.useEffect(() => {
-    if (!hovering && duration > 0) {
+    if (!hovering && duration && duration > 0) {
       const timeout = setTimeout(() => {
         onInternalClose();
       }, duration * 1000);

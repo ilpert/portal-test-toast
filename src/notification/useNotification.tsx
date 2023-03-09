@@ -1,8 +1,8 @@
-import * as React from 'react';
-import Notifications from './Notifications';
-import type { Placement } from './Notifications';
-import type { NotificationsRef, OpenConfig } from './Notifications';
-import type { CSSMotionProps } from 'rc-motion';
+import * as React from "react";
+import Notifications from "./Notifications";
+import type { Placement } from "./Notifications";
+import type { NotificationsRef, OpenConfig } from "./Notifications";
+import type { CSSMotionProps } from "rc-motion";
 
 const defaultGetContainer = () => document.body;
 
@@ -32,17 +32,17 @@ export interface NotificationAPI {
 }
 
 interface OpenTask {
-  type: 'open';
+  type: "open";
   config: OpenConfig;
 }
 
 interface CloseTask {
-  type: 'close';
+  type: "close";
   key: React.Key;
 }
 
 interface DestroyTask {
-  type: 'destroy';
+  type: "destroy";
 }
 
 type Task = OpenTask | CloseTask | DestroyTask;
@@ -68,7 +68,7 @@ function mergeConfig<T>(...objList: Partial<T>[]): T {
 }
 
 export default function useNotification(
-  rootConfig: NotificationConfig = {},
+  rootConfig: NotificationConfig = {}
 ): [NotificationAPI, React.ReactElement] {
   const {
     getContainer = defaultGetContainer,
@@ -108,13 +108,16 @@ export default function useNotification(
           uniqueKey += 1;
         }
 
-        setTaskQueue((queue) => [...queue, { type: 'open', config: mergedConfig }]);
+        setTaskQueue((queue) => [
+          ...queue,
+          { type: "open", config: mergedConfig },
+        ]);
       },
       close: (key) => {
-        setTaskQueue((queue) => [...queue, { type: 'close', key }]);
+        setTaskQueue((queue) => [...queue, { type: "close", key }]);
       },
       destroy: () => {
-        setTaskQueue((queue) => [...queue, { type: 'destroy' }]);
+        setTaskQueue((queue) => [...queue, { type: "destroy" }]);
       },
     };
   }, []);
@@ -132,16 +135,16 @@ export default function useNotification(
     if (notificationsRef.current && taskQueue.length) {
       taskQueue.forEach((task) => {
         switch (task.type) {
-          case 'open':
-            notificationsRef.current.open(task.config);
+          case "open":
+            notificationsRef.current?.open(task.config);
             break;
 
-          case 'close':
-            notificationsRef.current.close(task.key);
+          case "close":
+            notificationsRef.current?.close(task.key);
             break;
 
-          case 'destroy':
-            notificationsRef.current.destroy();
+          case "destroy":
+            notificationsRef.current?.destroy();
             break;
         }
       });
